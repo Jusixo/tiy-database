@@ -71,9 +71,9 @@ class HumanDatabase
     @profiles.each do |person|
       if person.name == delete_name
         puts "#{delete_name}, has been deleted."
+        @profiles.slice(index)
       else
         puts "Profile not found"
-        @profiles.slice(index)
       end
       index += 1
     end
