@@ -1,15 +1,3 @@
-# human_database
-
-# search for peson
-
-# delete a person
-
-#
-# make it able to (a)add,(s) search, and (d)delete for a person
-#
-
-# track information *
-
 
 class Person
 attr_reader "name", "phone_number", "address", "position", "salary", "slack_account", "github_account"
@@ -30,13 +18,11 @@ class HumanDatabase
     @profiles = []
   end
 
-
   def initial_question
     puts "(a) Add a profile (s) Search for a profile (d) Delete a profile "
     initial = gets.chomp
 
   end
-
 
   def add_person
     puts "What is your name?"
@@ -66,25 +52,28 @@ class HumanDatabase
     @profiles << account
   end
 
-
   def search_person
-    print "Please type in persons name"
+    print "Please type in persons name. "
     search_name = gets.chomp
     @profiles.each do |person|
       if person.name == search_name
         puts "name: #{person.name}, phone number: #{person.phone_number}, address: #{person.address}, position: #{person.position}, current salary: #{person.salary}, slack_account: #{person.slack_account}, github_account: #{person.github_account} "
+      else
+        puts "Profile not found"
       end
     end
   end
 
   def delete_person
     index = 0
-    print "Please type in persons name"
+    print "Please type in persons name. "
     delete_name = gets.chomp
     @profiles.each do |person|
       if person.name == delete_name
-        found == true
-        @profile.slice(index)
+        puts "#{delete_name}, has been deleted."
+      else
+        puts "Profile not found"
+        @profiles.slice(index)
       end
       index += 1
     end
@@ -98,7 +87,7 @@ class HumanDatabase
         add_person
       elsif choice == "s"
         search_person
-      elsif choice =="d"
+      elsif choice == "d"
         delete_person
       else
         puts "progam closing 👋🏼"
