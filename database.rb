@@ -1,8 +1,9 @@
+require 'csv'
 
 class Person
-attr_reader "name", "phone_number", "address", "position", "salary", "slack_account", "github_account"
+  attr_reader "name", "phone_number", "address", "position", "salary", "slack_account", "github_account"
 
-  def initialize(name, phone_number, address, position, salary, _slack_account, github_account)
+  def initialize(name, phone_number, address, position, salary, slack_account, github_account)
     @name = name
     @phone_number = phone_number
     @address = address
@@ -13,7 +14,7 @@ attr_reader "name", "phone_number", "address", "position", "salary", "slack_acco
   end
 end
 
-class HumanDatabase
+class DataBase
   def initialize
     @profiles = []
   end
@@ -21,7 +22,6 @@ class HumanDatabase
   def initial_question
     puts "(a) Add a profile (s) Search for a profile (d) Delete a profile "
     initial = gets.chomp
-
   end
 
   def add_person
@@ -55,27 +55,22 @@ class HumanDatabase
   def search_person
     print "Please type in persons name. "
     search_name = gets.chomp
-    @profiles.each do |person|
-      if person.name == search_name
-        puts "name: #{person.name}, phone number: #{person.phone_number}, address: #{person.address}, position: #{person.position}, current salary: #{person.salary}, slack_account: #{person.slack_account}, github_account: #{person.github_account} "
-      else
-        puts "Profile not found"
-      end
+    found_profile = @profiles.find {|person| person.name == search_name}
+    if found_profile
+      puts "name: #{found_profile.name}, phone number: #{found_profile.phone_number}, address: #{found_profile.address}, position: #{found_profile.position}, current salary: #{found_profile.salary}, slack_account: #{found_profile.slack_account}, github_account: #{found_profile.github_account} "
+    else
+      puts "Profile not found"
     end
   end
 
   def delete_person
-    index = 0
     print "Please type in persons name. "
     delete_name = gets.chomp
-    @profiles.each do |person|
-      if person.name == delete_name
-        puts "#{delete_name}, has been deleted."
-        @profiles.slice(index)
-      else
-        puts "Profile not found"
-      end
-      index += 1
+    delete_profile = @profiles.delete_if { |person| person.name == delete_name}
+    if delete_profile
+      puts "profile deleted"
+    else
+      puts "profile not found"
     end
   end
 
@@ -95,5 +90,4 @@ class HumanDatabase
     end
   end
 end
-
-HumanDatabase.new.start
+DataBase.new.start\
